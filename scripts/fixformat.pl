@@ -7,6 +7,10 @@
 
 print "<dic>\n";
 while (<>) {
+    # fix illegal XML
+    s/&(?![^ ]+;)/&amp;/sg;
+    s/.*>.*\K<(?=.*<)/&lt;/sg;
+    # Fix illegal characters. TODO: anything better than just deleting them?
     @chars = split(//);
     foreach $c (@chars) {
         $dec = ord($c);

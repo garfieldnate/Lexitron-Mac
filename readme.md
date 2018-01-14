@@ -14,12 +14,29 @@ First, convert the lex files into UTF-8 XML documents:
 
 Next, generate the source Mac dictionary XML file:
 
-    ...
+    perl scripts/convert_to_mac.pl en-th build/etlex.utf-8 >build/LEXiTRON_en-th.xml
+    perl scripts/convert_to_mac.pl th-en build/telex.utf-8 >build/LEXiTRON_th-en.xml
 
-Then use the dictionary development kit to generate the final dictionary file:
+Then use the dictionary development kit to generate the final dictionary file. First, edit resources/Makefile so that the `DICT_BUILD_TOOL_DIR` points to your [Dictionary Development Kit](https://github.com/SebastianSzturo/Dictionary-Development-Kit.git) location. Then execute the following:
 
-    ...
+    cd resources
+    export DICT_BUILD_TOOL_DIR='path/to/your/[Dictionary/Development/Kit](https://github.com/SebastianSzturo/Dictionary-Development-Kit.git)'
+    make -f makefile_en-th all
+    make -f makefile_en-th install
+    make -f makefile_en-th clean # just to be safe; not sure it's necessary
+    make -f makefile_th-en all
+    make -f makefile_en-th install
 
 Place the resulting file in your dictionary directory; in Dictionary.app, go to File -> Open Dictionaries Folder. The file should be in the same folder as CoreDataUbiquitySupport.
 
 Finally, in Dictionary.app go to Dictionary -> Preferences and check the box next to "LEXiTRON English/Thai". The dictionary should now be available for use.
+
+##TODO
+
+* Multiple entries with the same headword should be under one heading
+* Better CSS
+* Should generate a single En-TH/TH-EN dictionary.
+* One-step build
+* Include Dictionary-Toolkit as subrepo
+* add license
+
