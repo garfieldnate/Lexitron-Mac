@@ -1,6 +1,6 @@
 # LEXiTRON Mac Dictionary
 
-This project transforms the [LEXiTRON](http://lexitron.nectec.or.th/) dictionary into a format usable by Mac's Dictionary.app. A copy of the original LEXiTRON data is included, as well, since it is extremely difficult to obtain from the source website.
+This project transforms the [LEXiTRON](http://lexitron.nectec.or.th/) dictionary into a format usable by Mac's Dictionary.app. A copy of the original LEXiTRON data is included, as well, since it is extremely difficult to obtain from NECTEC due to technical problems with their website.
 
 ## Building
 
@@ -19,23 +19,26 @@ Next, generate the source Mac dictionary XML file:
     perl scripts/convert_to_mac.pl en-th build/etlex.utf-8 >build/LEXiTRON_en-th.xml
     perl scripts/convert_to_mac.pl th-en build/telex.utf-8 >build/LEXiTRON_th-en.xml
 
-Then use the dictionary development kit to generate the final dictionary file. First, edit resources/Makefile so that the `DICT_BUILD_TOOL_DIR` points to your [Dictionary Development Kit](https://github.com/SebastianSzturo/Dictionary-Development-Kit.git) location. Then execute the following:
+Then use the dictionary development kit to generate the final dictionary file. First, set the `DICT_BUILD_TOOL_DIR` environment variable to the location of your [Dictionary Development Kit](https://github.com/SebastianSzturo/Dictionary-Development-Kit.git). Then execute make to compile the final dictionaries:
 
-    cd resources
     export DICT_BUILD_TOOL_DIR='path/to/your/[Dictionary/Development/Kit](https://github.com/SebastianSzturo/Dictionary-Development-Kit.git)'
+    cd resources
     make -f makefile_en-th all install
     make -f makefile_th-en all install
 
-Place the resulting file in your dictionary directory; in Dictionary.app, go to File -> Open Dictionaries Folder. The file should be in the same folder as CoreDataUbiquitySupport.
+Place the resulting .dictionary files in your dictionary directory; in Dictionary.app, go to File -> Open Dictionaries Folder. The file should be in the same folder as CoreDataUbiquitySupport.
 
 Finally, in Dictionary.app go to Dictionary -> Preferences and check the box next to "LEXiTRON English/Thai". The dictionary should now be available for use.
 
+If you would like the combined EN-TH/TH-EN dictionary, then do the following (after generating the source Mac XML dictionary files above):
+
+    scripts/combine.pl
+    cd resources
+    make -f Makefile_combined all install
+
 ## TODO
 
-* Doesn't show in Dictionary.app sometimes but still works from CLI ???
+* sometimes doesn't show in Dictionary.app sometimes but still works from CLI ???
 * Better CSS
-* Should also generate a single En-TH/TH-EN dictionary.
 * One-step build
-* Include Dictionary-Toolkit as subrepo
-* add license
-
+* Include Dictionary-Toolkit as sub-repo
