@@ -4,7 +4,14 @@ This project transforms the [LEXiTRON](http://lexitron.nectec.or.th/) dictionary
 
 ## Building
 
-First, LEXiTRON contains lots of illegal character combinations (probably typos). These will trip-up the dictionary compiler later, so they should be fixed using [thaicheck](http://www.lyndonhill.com/Projects/thaicheck.html). Note that these commands will print lots and lots of errors; these are just logging statements indicating the problems that are being fixed.
+Required software:
+
+* Mac OSX
+* Perl (default one should be okay)
+* [thaicheck](http://www.lyndonhill.com/Projects/thaicheck.html)
+* [Dictionary Development Kit](https://github.com/SebastianSzturo/Dictionary-Development-Kit.git)
+
+First, LEXiTRON contains lots of illegal character combinations (probably typos). These will trip-up the dictionary compiler later, so they should be fixed using thaicheck. Note that these commands will print lots and lots of "errors"; these are just logging statements indicating the problems that are being fixed.
 
     thaicheck -r lexitron-data/telex -f > build/telex.fixed
     thaicheck -r lexitron-data/etlex -f > build/etlex.fixed
@@ -14,31 +21,30 @@ Next, convert the files to proper UTF-8-encoded XML. Note that there are several
     perl scripts/fixformat.pl build/etlex.fixed > build/etlex.utf-8
     perl scripts/fixformat.pl build/telex.fixed > build/telex.utf-8
 
-Next, generate the source Mac dictionary XML file:
+Next, generate the source Mac dictionary XML files:
 
     perl scripts/convert_to_mac.pl en-th build/etlex.utf-8 >build/LEXiTRON_en-th.xml
     perl scripts/convert_to_mac.pl th-en build/telex.utf-8 >build/LEXiTRON_th-en.xml
 
-Then use the dictionary development kit to generate the final dictionary file. First, set the `DICT_BUILD_TOOL_DIR` environment variable to the location of your [Dictionary Development Kit](https://github.com/SebastianSzturo/Dictionary-Development-Kit.git). Then execute make to compile the final dictionaries:
+Then use the dictionary development kit to generate the final dictionary file. First, set the `DICT_BUILD_TOOL_DIR` environment variable to the location of your copy of the Dictionary Development Kit. Then execute `make` to compile the final dictionaries:
 
     export DICT_BUILD_TOOL_DIR='path/to/your/[Dictionary/Development/Kit](https://github.com/SebastianSzturo/Dictionary-Development-Kit.git)'
     cd resources
     make -f makefile_en-th all install
     make -f makefile_th-en all install
 
-Place the resulting .dictionary files in your dictionary directory; in Dictionary.app, go to File -> Open Dictionaries Folder. The file should be in the same folder as CoreDataUbiquitySupport.
-
 Finally, in Dictionary.app go to Dictionary -> Preferences and check the box next to "LEXiTRON English/Thai". The dictionary should now be available for use.
 
 If you would like the combined EN-TH/TH-EN dictionary, then do the following (after generating the source Mac XML dictionary files above):
 
-    scripts/combine.pl
+    perl scripts/combine.pl
+    export DICT_BUILD_TOOL_DIR='path/to/your/[Dictionary/Development/Kit](https://github.com/SebastianSzturo/Dictionary-Development-Kit.git)'
     cd resources
     make -f Makefile_combined all install
 
 ## TODO
-
-* sometimes doesn't show in Dictionary.app sometimes but still works from CLI ???
-* Better CSS
+* add CSS
+* I don't understand LEXiTRON sequence numbers; fly1 occurs several times in etlex
+* sometimes doesn't show in Dictionary.app but still works from CLI ???
 * One-step build
 * Include Dictionary-Toolkit as sub-repo
