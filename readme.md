@@ -14,8 +14,13 @@ This project transforms the [LEXiTRON](http://lexitron.nectec.or.th/) dictionary
     <img alt="English-Thai" src="https://user-images.githubusercontent.com/778453/35193460-f99cb8a8-fea2-11e7-9e43-ae32e38486e1.png" align="left" height="313" width="230" >
 </figure>
 
+<figure>
+    <figcaption>Three-finger/deep click integration:</figcaption>
+    <img alt="popup dictionary" src="https://user-images.githubusercontent.com/778453/35198649-f1ffe440-fef1-11e7-97a3-31c238a9cdb8.png" alt="Three-Finger Lookup" height="221" width="204">
+</figure>
+
 <!--Can't use a style=clear:both, so just have to clear it ourselves-->
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 ## Installing
 
