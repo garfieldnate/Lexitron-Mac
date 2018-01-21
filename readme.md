@@ -1,6 +1,21 @@
 # LEXiTRON Mac Dictionary
 
-This project transforms the [LEXiTRON](http://lexitron.nectec.or.th/) dictionary into a format usable by Mac's Dictionary.app. A copy of the original LEXiTRON data is included here, as well, since it is extremely difficult to obtain from NECTEC due to technical problems with their website.
+This project transforms the [LEXiTRON](http://lexitron.nectec.or.th/) dictionary into a format usable by Mac's Dictionary.app. Thai-English, English-Thai, and bidirectional dictionaries are all generated. A copy of the original LEXiTRON data is included here, as well, since it is extremely difficult to obtain from NECTEC due to technical problems with their website.
+
+## Screenshots:
+
+<figure>
+    <figcaption>Thai-English:</figcaption>
+    <img alt="Thai-English" src="https://user-images.githubusercontent.com/778453/35193446-bd2d420c-fea2-11e7-898f-687caa701a78.png" align="left" height="737" width="358" style="display: block">
+</figure>
+
+<figure>
+    <figcaption>English-Thai:</figcaption>
+    <img alt="English-Thai" src="https://user-images.githubusercontent.com/778453/35193460-f99cb8a8-fea2-11e7-9e43-ae32e38486e1.png" align="left" height="313" width="230" >
+</figure>
+
+<!--Can't use a style=clear:both, so just have to clear it ourselves-->
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 ## Installing
 
