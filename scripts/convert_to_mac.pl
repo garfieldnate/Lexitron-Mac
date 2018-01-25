@@ -61,21 +61,22 @@ sub get_tag_names {
 }
 
 sub root {
-    my ( $twig, $el ) = @_;
-    $el->set_name('d:dictionary');
-    $el->set_atts({
+    my ( $twig, $root ) = @_;
+    $root->set_name('d:dictionary');
+    $root->set_atts({
         xmlns => 'http://www.w3.org/1999/xhtml',
         'xmlns:d' => 'http://www.apple.com/DTDs/DictionaryService-1.0.rng'});
 }
 
 sub root_finished {
-    my ( $twig, $el ) = @_;
+    my ( $twig, $root ) = @_;
     # Paste new entries for each group of sequenced headwords
     for my $head_word (keys %sequences) {
         my $entry = XML::Twig::Elt->new('d:entry',
             {'d:title' => $head_word, lang => $src});
         my $id = join ',', map {$_->id} @{$sequences{$head_word}};
         $entry->set_att(id => $id);
+        $entry->paste('last_child', $root);
 
         my $index = XML::Twig::Elt->new('d:index', {'d:value' => $head_word});
         $index->paste('last_child', $entry);
@@ -83,7 +84,6 @@ sub root_finished {
         for my $div (@{$sequences{$head_word}}) {
             $div->paste('last_child', $entry);
         }
-        $entry->paste('last_child', $el);
     }
 }
 
@@ -127,27 +127,19 @@ sub entry {
         $sequence_number = $1;
     }
 
+    my $header = get_header($head_word_text, $sequence_number);
+
     # d:entry element will be created later from combined div's if this is part of a sequence of entries
-    $el->set_att(id => $id_text);
-    if ($sequence_number) {
-        $el->set_name('div');
-    } else {
-        $el->set_name('d:entry');
-        $el->set_att('d:title' => $head_word->text);
-        $el->set_att(lang => $src);
-    }
-
-    my $header = XML::Twig::Elt->new('h2', {class => 'header'}, $head_word_text);
-    if ($sequence_number) {
-        XML::Twig::Elt->new('sup', {class => 'sequence-number'}, "$sequence_number")->paste('last_child', $header);
-    }
-
-    if(!$sequence_number) {
+    $el->set_name('div');
+    $el->set_att(class => 'entry-container');
+    $el->set_att(lang => $src);
+    $header->paste('first_child', $el);
+    if (!$sequence_number) {
+        my $entry_wrapper = $el->wrap_in('d:entry' => {'d:title' => $head_word->text, id => $id_text});
         my $index = XML::Twig::Elt->new('d:index', {'d:value' => $search_text, class => 'index'});
-        $index->paste('first_child', $el);
-        $header->paste('after', $index);
+        $index->paste('first_child', $entry_wrapper);
     } else {
-        $header->paste('first_child', $el);
+        $el->set_att(id => $id_text);
     }
 
     if($cat) {
@@ -236,4 +228,13 @@ sub entry {
     } else {
         $el->flush;
     }
+}
+
+sub get_header {
+    my ($head_word_text, $sequence_number) = @_;
+    my $header = XML::Twig::Elt->new('h2', {class => 'header'}, $head_word_text);
+    if ($sequence_number) {
+        XML::Twig::Elt->new('sup', {class => 'sequence-number'}, "$sequence_number")->paste('last_child', $header);
+    }
+    return $header;
 }

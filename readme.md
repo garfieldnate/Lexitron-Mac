@@ -71,6 +71,7 @@ If you would like the combined EN-TH/TH-EN dictionary, then do the following (af
 The `lexitron-data` folder is copyrighted by NECTEC and contains its own license files. The rest of the project is released under the MIT license (see `LICENSE`).
 
 ## TODO
+* NEXT: div's wrapping multiples should have a class name like 'entry'; should also wrap ALL entries, not just multiple ones
 * add CSS
 * script to make all dictionaries and zip up them for release
 * I don't understand LEXiTRON sequence numbers; fly1 occurs several times in etlex
