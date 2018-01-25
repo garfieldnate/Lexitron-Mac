@@ -14,17 +14,23 @@ if ( @ARGV < 2 ) {
 }
 
 my $src;
+my $src_name;
 my $trg;
+my $trg_name;
 my $tag_names;
 my $id_prefix;
 if ($ARGV[0] eq 'en-th') {
     $src = 'en';
+    $src_name = 'English';
     $trg = 'th';
+    $trg_name = 'Thai';
     $tag_names = get_tag_names('e', 't');
     $id_prefix = 'etlex-';
 } elsif ($ARGV[0] eq 'th-en') {
     $src = 'th';
+    $src_name = 'Thai';
     $trg = 'en';
+    $trg_name = 'English';
     $tag_names = get_tag_names('t', 'e');
     $id_prefix = 'telex-';
 } else {
@@ -183,9 +189,9 @@ sub entry {
     }
 
     if($src_syns) {
-        my @synonyms = split /;\s*/, $src_syns->text;
+        my @synonyms = split /[;,]\s*/, $src_syns->text;
         my $div = XML::Twig::Elt->new('div', {class => 'source-synonyms'});
-        XML::Twig::Elt->new("h4", {class => 'syns-header'}, 'Synonyms')->paste('first_child', $div);
+        XML::Twig::Elt->new("h4", {class => 'syns-header'}, "$src_name Synonyms")->paste('first_child', $div);
         $div->paste('last_child', $el);
         my $list = XML::Twig::Elt->new('ul');
         $list->paste('last_child', $div);
@@ -196,9 +202,9 @@ sub entry {
         $src_syns->delete;
     }
     if($trg_syns) {
-        my @synonyms = split /;\s*/, $trg_syns->text;
+        my @synonyms = split /[;,]\s*/, $trg_syns->text;
         my $div = XML::Twig::Elt->new('div', {class => 'target-synonyms', lang => $trg});
-        XML::Twig::Elt->new("h4", {class => 'ants-header'}, 'Synonyms')->paste('first_child', $div);
+        XML::Twig::Elt->new("h4", {class => 'syns-header'}, "$trg_name Synonyms")->paste('first_child', $div);
         $div->paste('last_child', $el);
         my $list = XML::Twig::Elt->new('ul');
         $list->paste('last_child', $div);
@@ -209,9 +215,9 @@ sub entry {
         $trg_syns->delete;
     }
     if($ants) {
-        my @antonyms = split /;\s*/, $ants->text;
+        my @antonyms = split /[;,]\s*/, $ants->text;
         my $div = XML::Twig::Elt->new('div', {class => 'antonyms'});
-        XML::Twig::Elt->new("h4", {class => 'syns-header'}, 'Antonyms')->paste('first_child', $div);
+        XML::Twig::Elt->new("h4", {class => 'ants-header'}, 'Antonyms')->paste('first_child', $div);
         $div->paste('last_child', $el);
         my $list = XML::Twig::Elt->new('ul');
         $list->paste('last_child', $div);
