@@ -1,5 +1,7 @@
 # LEXiTRON Mac Dictionary
 
+![logo: 'apple' spelled in Thai, with one character replaced with an apple with a bite out of it](https://github.com/garfieldnate/Lexitron-Mac/raw/master/logo.png)
+
 This project transforms the [LEXiTRON](http://lexitron.nectec.or.th/) dictionary into a format usable by Mac's Dictionary.app. Thai-English, English-Thai, and bidirectional dictionaries are all generated. A copy of the original LEXiTRON data is included here, as well, since it is extremely difficult to obtain from NECTEC due to technical problems with their website.
 
 ## Screenshots:
